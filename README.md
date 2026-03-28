@@ -6,8 +6,6 @@ A performant dashboard for browsing, filtering, and aggregating financial transa
 
 ## Setup
 
-**Requirements:** Node.js 18+, npm / pnpm / yarn
-
 ```bash
 cd frontend
 npm install
@@ -71,9 +69,7 @@ A sentinel element at the bottom of the list is observed. When it enters the vie
 
 ## Trade-offs
 
-| Decision | Benefit | Cost |
-|---|---|---|
+| Decision              | Benefit                                                                   | Cost                                                          |
+| --------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Client-side filtering | Date range + multi-status work without API changes; insights stay in sync | All pages must be loaded before all matching rows are visible |
-| Virtual list | Constant DOM size; smooth scrolling with thousands of rows | Absolute positioning means total list height must be estimated upfront |
-| No debounce on search | Instant feedback — results update as you type | Re-runs the filter memo on every keystroke (negligible for typical dataset sizes) |
-| `retry: false` on the query | Surfaces API errors immediately | A transient network failure requires a manual page reload |
+

@@ -6,6 +6,7 @@ import { useTransactionInsights } from '../../hooks/use-transaction-insights';
 import { useTransactions } from '../../hooks/use-transactions';
 import { TransactionFilters } from '../../types/transaction.types';
 import { filterTransactions } from '../../utils/transaction.utils';
+import { useDebounce } from '@/shared/hooks/use-debounce';
 import { FilterBar } from '../views/filter-bar';
 import { InsightsPanel } from '../views/insights-panel';
 import { TransactionsTable } from '../views/transactions-table';
@@ -14,14 +15,16 @@ export function TransactionsDashboard() {
 	const [rawSearch, setRawSearch] = useState('');
 	const [filters, setFilters] = useState<TransactionFilters>(DEFAULT_FILTERS);
 
+	const debouncedSearch = useDebounce(rawSearch, 300);
+
 	const { data, isLoading, isError, isFetchingNextPage, hasNextPage, fetchNextPage } =
 		useTransactions();
-
+ 
 	const allTransactions = useMemo(() => data?.pages.flat() ?? [], [data]);
 
 	const filteredTransactions = useMemo(
-		() => filterTransactions(allTransactions, { ...filters, search: rawSearch }),
-		[allTransactions, filters, rawSearch]
+		() => filterTransactions(allTransactions, { ...filters, search: debouncedSearch }),
+		[allTransactions, filters, debouncedSearch]
 	);
 
 	const insights = useTransactionInsights(filteredTransactions);
