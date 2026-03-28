@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
 	DropdownMenu,
@@ -153,6 +153,12 @@ function SimpleDropdown({
 	truncateLongOptions = false,
 	dropdownAlign,
 }: Props) {
+	const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
+
+	useEffect(() => {
+		setPortalContainer(document.getElementById('popovers')); // eslint-disable-line
+	}, []);
+
 	return (
 		<DropdownMenu
 			modal={modal}
@@ -161,7 +167,7 @@ function SimpleDropdown({
 		>
 			<DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
 
-			<DropdownMenuPortal container={document.getElementById('popovers')}>
+			<DropdownMenuPortal container={portalContainer}>
 				<DropdownMenuContent
 					className={cn('min-w-[120px] p-0', className)}
 					style={contentStyle}
