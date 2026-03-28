@@ -82,24 +82,34 @@ export function FilterBar({
 				/>
 			</div>
 
-			{/* Date range */}
-			<div className="flex w-full items-center gap-2 sm:w-auto">
+		{/* Date range */}
+		<div className="flex w-full items-center gap-2 sm:w-auto">
+			<label className="relative min-w-0 flex-1 sm:flex-none">
+				<span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground select-none">
+					From
+				</span>
 				<input
 					type="date"
 					value={filters.dateFrom ?? ''}
 					max={filters.dateTo ?? undefined}
 					onChange={(e) => onFiltersChange({ dateFrom: e.target.value || null })}
-					className={cn(inputClass, 'min-w-0 flex-1 sm:flex-none')}
+					className={cn(inputClass, 'w-full pl-12 pr-2', !filters.dateFrom && '[&:not(:focus)]:text-transparent')}
 				/>
-				<span className="shrink-0 text-xs text-muted-foreground">–</span>
+			</label>
+			<span className="shrink-0 text-xs text-muted-foreground">–</span>
+			<label className="relative min-w-0 flex-1 sm:flex-none">
+				<span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground select-none">
+					To
+				</span>
 				<input
 					type="date"
 					value={filters.dateTo ?? ''}
 					min={filters.dateFrom ?? undefined}
 					onChange={(e) => onFiltersChange({ dateTo: e.target.value || null })}
-					className={cn(inputClass, 'min-w-0 flex-1 sm:flex-none')}
+					className={cn(inputClass, 'w-full pl-8 pr-2', !filters.dateTo && '[&:not(:focus)]:text-transparent')}
 				/>
-			</div>
+			</label>
+		</div>
 
 			{/* Filters dropdown + Reset */}
 			<div className="flex items-center gap-2">
